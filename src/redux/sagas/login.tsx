@@ -12,7 +12,7 @@ import {
 } from '../actions/login';
 
 import { 
-    read
+    sync
 } from '../actions/profile';
 
 import rsf from '../rsf';
@@ -44,7 +44,7 @@ function* loginStatusWatcher() {
         if (user) {
             yield all([
                 put(loginSuccess(user)),
-                put(read(user.uid))
+                put(sync(user.uid))
             ]) 
         } else {
             yield put(logoutSuccess())

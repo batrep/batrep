@@ -30,10 +30,18 @@ export const types = {
         SUCCESS: 'PROFILE.UPDATE.SUCCESS',
         FAILURE: 'PROFILE.UPDATE.FAILURE',
     },
+    SYNC: {
+        REQUEST: 'PROFILE.SYNC.REQUEST'
+    }
 }
 
 export const read = (uid: string): ProfileReadAction => ({
     type: types.READ.REQUEST,
+    uid: uid
+})
+
+export const sync = (uid: string): ProfileReadAction => ({
+    type: types.SYNC.REQUEST,
     uid: uid
 })
 
