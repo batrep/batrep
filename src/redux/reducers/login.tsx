@@ -1,13 +1,21 @@
 import { types } from '../actions/login';
-import { BaseAction } from '../../common';
+import { BaseAction } from '../actions/common';
+import { LoginAction } from '../actions/login';
+import { User } from 'firebase';
 
-const initialState = {
+export interface LoginState {
+    loading: boolean,
+    loggedIn: boolean,
+    user: User | null
+}
+
+const initialState: LoginState = {
     loading: false,
     loggedIn: false,
     user: null
 }
 
-export default function loginReducer(state=initialState, action: BaseAction) {
+export function loginReducer(state=initialState, action: BaseAction) {
     switch(action.type) {
         case types.LOGIN.REQUEST:
         case types.LOGOUT.REQUEST:
@@ -20,7 +28,7 @@ export default function loginReducer(state=initialState, action: BaseAction) {
                 ...state,
                 loading: false,
                 loggedIn: true,
-                user: action.payload
+                user: (action as LoginAction).user
             }
         case types.LOGIN.FAILURE:
             return {

@@ -1,5 +1,9 @@
-import { BaseAction } from '../../common';
+import { BaseAction, BaseError } from './common';
 import { User } from 'firebase';
+
+export interface LoginAction extends BaseAction {
+    user: User;
+}
 
 export const types = {
     LOGIN: {
@@ -18,25 +22,25 @@ export const login = () => ({
     type: types.LOGIN.REQUEST,
 })
   
-export const loginSuccess = (user: any): BaseAction => ({
+export const loginSuccess = (user: User): LoginAction => ({
     type: types.LOGIN.SUCCESS,
-    payload: user,
+    user: user,
 }) 
   
-export const loginFailure = (error: any): BaseAction => ({
+export const loginFailure = (error: any): BaseError => ({
     type: types.LOGIN.FAILURE,
-    payload: error,
+    error: error,
 })
   
-export const logout = () => ({
+export const logout = (): BaseAction => ({
     type: types.LOGOUT.REQUEST,
 })
   
-export const logoutSuccess = () => ({
+export const logoutSuccess = (): BaseAction => ({
     type: types.LOGOUT.SUCCESS,
 })
   
-export const logoutFailure = (error: any): BaseAction => ({
+export const logoutFailure = (error: any): BaseError => ({
     type: types.LOGOUT.FAILURE,
-    payload: error,
+    error: error,
 })

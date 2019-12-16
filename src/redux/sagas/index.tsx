@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects'
-import login from './login'
+import { loginRootSaga } from './login'
 
 export const rootSaga = function* root() {
-    yield all([ fork(login) ]);
+    yield all([ fork(loginRootSaga) ]);
 };

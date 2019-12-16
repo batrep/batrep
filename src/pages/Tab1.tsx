@@ -11,11 +11,14 @@ import './Tab1.css';
 import { login, logout } from '../redux/actions/login';
 import { useSelector, useDispatch } from 'react-redux';
 import { State } from '../redux/reducers';
+import { User } from 'firebase';
+import { Profile } from '../redux/actions/profile';
 
 const Tab1: React.FC = () => {
   const loading: boolean = useSelector((state: State) => state.login.loading);
   const loggedIn: boolean = useSelector((state: State) => state.login.loggedIn);
-  const user: any = useSelector((state: State) => state.login.user);
+  const user: User | null = useSelector((state: State) => state.login.user);
+  const myProfile: Profile | null = useSelector((state: State) => state.myProfile.profile);
   const dispatch = useDispatch()
   return (
     <IonPage>
@@ -26,7 +29,10 @@ const Tab1: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonButton onClick={() => dispatch(login())}>Login</IonButton>
-        <p>{user ? JSON.stringify(user) : "not logged in"}</p>
+        <p>{user ? user.displayName : "not logged in"}</p>
+        <p>
+            {myProfile ? JSON.stringify(myProfile) : "no profile"}
+        </p>
       </IonContent>
     </IonPage>
   );

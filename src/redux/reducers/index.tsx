@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
-import loginReducer from './login';
+import { loginReducer, LoginState } from './login';
+import { profileReducer, ProfileState } from './profile';
 
 export interface State {
-    login
+    login: LoginState,
+    myProfile: ProfileState
 }
   
 export const rootReducers = combineReducers<State>({
-    login: loginReducer
+    login: loginReducer,
+    myProfile: profileReducer
 });

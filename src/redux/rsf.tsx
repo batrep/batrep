@@ -12,6 +12,6 @@ const firebaseApp = firebase.initializeApp({
     measurementId: "G-ZEYNT7SPFJ"
 });
 
-const rsf = new ReduxSagaFirebase(firebaseApp);
+const rsf: ReduxSagaFirebase = new ReduxSagaFirebase(firebaseApp);
 
 export default rsf;

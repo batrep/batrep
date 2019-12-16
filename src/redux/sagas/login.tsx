@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import { User } from 'firebase';
 import 'firebase/auth';
 import { all, call, fork, put, take, takeEvery } from 'redux-saga/effects';
 
@@ -9,6 +10,10 @@ import {
     logoutSuccess,
     logoutFailure
 } from '../actions/login';
+
+import { 
+    read
+} from '../actions/profile';
 
 import rsf from '../rsf';
 
@@ -34,17 +39,20 @@ function* loginStatusWatcher() {
     const channel = yield call(rsf.auth.channel);
 
     while (true) {
-        const { user } = yield take(channel);
+        const user: User = yield take(channel);
 
         if (user) {
-            yield put(loginSuccess(user))
+            yield all([
+                put(loginSuccess(user)),
+                put(read(user.uid))
+            ]) 
         } else {
             yield put(logoutSuccess())
         }
     }
 }
 
-export default function* loginRootSaga() {
+export function* loginRootSaga() {
     yield fork(loginStatusWatcher)
     yield all([
         takeEvery(types.LOGIN.REQUEST, loginSaga),
