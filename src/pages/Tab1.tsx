@@ -17,9 +17,9 @@ import { Profile } from '../redux/actions/profile';
 const Tab1: React.FC = () => {
   const loading: boolean = useSelector((state: State) => state.login.loading);
   const loggedIn: boolean = useSelector((state: State) => state.login.loggedIn);
-  const user: User | null = useSelector((state: State) => state.login.user);
-  const myProfile: Profile | null = useSelector((state: State) => state.myProfile.profile);
-  const dispatch = useDispatch()
+  const user = JSON.parse(JSON.stringify(useSelector((state: State) => state.login.user)));
+  const myProfile = useSelector((state: State) => state.myProfile.profile);
+  const dispatch = useDispatch();
   return (
     <IonPage>
       <IonHeader>
@@ -29,9 +29,9 @@ const Tab1: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonButton onClick={() => dispatch(login())}>Login</IonButton>
-        <p>{user ? user.displayName : "not logged in"}</p>
+        <p>DISPLAY NAME: {user ? user.displayName : "not logged in"}</p>
         <p>
-            {myProfile ? JSON.stringify(myProfile) : "no profile"}
+          Public: {myProfile ? JSON.stringify(myProfile.public) : "unable to retrieve"}
         </p>
       </IonContent>
     </IonPage>

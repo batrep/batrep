@@ -13,23 +13,26 @@ import {
 
 import rsf from '../rsf';
 
-
-const profileTransformer = profile => {
-    console.log("PROFILE TRANSFORMER", profile);
-    return profile;
-}
-
-function* readProfileSaga(uid) {
+function* readProfileSaga(action) {
     try {
-        const profile: Profile = yield call(rsf.firestore.getDocument, "/profile/{$uid}")
+        const snapshot = yield call(rsf.firestore.getDocument, `/profiles/${action.uid}`);
+        const profile = snapshot.data();
         yield put(readSuccess(profile));
     } catch (error) {
         yield put(readFailure(error))
     }
 }
 
+function* syncProfileSaga(action) {
+    /*
+    yield fork(rsf.firestore.syncDocument, `/profiles/${action.uid}`, {
+        successAction: readSuccess
+    })
+    */
+}
+
 export function* profileRootSaga() {
     yield all([
-        takeEvery(types.READ.REQUEST, readProfileSaga)
+        takeEvery(types.READ.REQUEST, readProfileSaga),
     ])
 }

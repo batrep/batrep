@@ -6,6 +6,10 @@ export interface Profile {
     store: string | null
 }
 
+export interface ProfileReadAction extends BaseAction {
+    uid: string
+}
+
 export interface ProfileAction extends BaseAction {
     profile: Profile
 }
@@ -28,8 +32,9 @@ export const types = {
     },
 }
 
-export const read = (uid: string): BaseAction => ({
-    type: types.READ.REQUEST
+export const read = (uid: string): ProfileReadAction => ({
+    type: types.READ.REQUEST,
+    uid: uid
 })
 
 export const readSuccess = (profile: Profile): ProfileAction => ({

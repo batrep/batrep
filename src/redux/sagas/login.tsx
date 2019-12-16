@@ -39,7 +39,7 @@ function* loginStatusWatcher() {
     const channel = yield call(rsf.auth.channel);
 
     while (true) {
-        const user: User = yield take(channel);
+        const { user } = yield take(channel);
 
         if (user) {
             yield all([
